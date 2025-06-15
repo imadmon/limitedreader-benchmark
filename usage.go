@@ -63,13 +63,13 @@ func goRateLimitUsageOnGraph() *charts.Line {
 		"Golang Burstable Rate Limiting",
 		"Normal Usage",
 		nil,
-		[]SeriesData{
+		MoveOverlappingSeriesData([]SeriesData{
 			{
 				Title:  LineTitle,
 				Values: results,
 				Color:  LineText,
 			},
-		},
+		}),
 	)
 }
 
@@ -140,13 +140,13 @@ func goRateLimitBurstsOnlyOnGraph() *charts.Line {
 		"Golang Burstable Rate Limiting",
 		"Only Bursts Usage",
 		nil,
-		[]SeriesData{
+		MoveOverlappingSeriesData([]SeriesData{
 			{
 				Title:  LineTitle,
 				Values: results,
 				Color:  LineText,
 			},
-		},
+		}),
 	)
 }
 
@@ -191,13 +191,13 @@ func uberRateLimitUsageOnGraph() *charts.Line {
 		"Uber Deterministic Rate Limiting",
 		"Normal Usage",
 		nil,
-		[]SeriesData{
+		MoveOverlappingSeriesData([]SeriesData{
 			{
 				Title:  LineTitle,
 				Values: results,
 				Color:  LineText,
 			},
-		},
+		}),
 	)
 }
 
@@ -240,13 +240,13 @@ func imadmonRateLimitUsageOnGraph() *charts.Line {
 		"IMadmon Deterministic Rate Limiting",
 		"Normal Usage",
 		nil,
-		[]SeriesData{
+		MoveOverlappingSeriesData([]SeriesData{
 			{
 				Title:  LineTitle,
 				Values: results,
 				Color:  LineText,
 			},
-		},
+		}),
 	)
 }
 

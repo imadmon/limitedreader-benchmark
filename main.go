@@ -8,19 +8,19 @@ import (
 )
 
 const (
-	benchmarkDataFile         = "benchmark.json"
-	benchmarkGraphFile        = "benchmark.html"
-	benchmarkAverageDataFile  = "benchmarkAverage.json"
-	benchmarkAverageGraphFile = "benchmarkAverage.html"
-	usageGraphFile            = "usage.html"
+	benchmarkDataFile         = "docs/benchmark.json"
+	benchmarkGraphFile        = "docs/benchmark.html"
+	benchmarkAverageDataFile  = "docs/benchmarkAverage.json"
+	benchmarkAverageGraphFile = "docs/benchmarkAverage.html"
+	usageGraphFile            = "docs/usage.html"
 )
 
 func main() {
-	Usage()
+	// Usage()
 	Benchmark()
 	// LoadBenchmark()
 	// BenchmarkWithAverage()
-	//LoadBenchmarkWithAverage()
+	// LoadBenchmarkWithAverage()
 	// BenchmarkMultipleTimes()
 }
 

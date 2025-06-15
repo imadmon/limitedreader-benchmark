@@ -11,6 +11,12 @@ import (
 	"github.com/samber/lo"
 )
 
+type LineSeriesData struct {
+	Title  string
+	Values []float32
+	Color  string
+}
+
 func GraphBenchmark(benchmark AllBenchmarkData, filename string) {
 	graphs := make([]*charts.Line, 0)
 
@@ -27,12 +33,12 @@ func BenchmarkRateLimitingSyntheticGraph(data BenchmarkData) *charts.Line {
 		"Classic Usage Synthetic Rate Limiting - SyntheticRX MB",
 		"Passing X data with X/4 limit with synthetic reader",
 		nil,
-		[]SeriesData{
+		MoveOverlappingSeriesData([]SeriesData{
 			data[GolangReader][SyntheticRX],
 			data[JujuReader][SyntheticRX],
 			data[UberReader][SyntheticRX],
 			data[IMadmonReader][SyntheticRX],
-		},
+		}),
 	)
 }
 
@@ -44,34 +50,34 @@ func BenchmarkRateLimitingRealWorldLocalGraph(data BenchmarkData) []*charts.Line
 			title+" - RX MB",
 			subtitle,
 			nil,
-			[]SeriesData{
+			MoveOverlappingSeriesData([]SeriesData{
 				data[GolangReader][RX],
 				data[JujuReader][RX],
 				data[UberReader][RX],
 				data[IMadmonReader][RX],
-			},
+			}),
 		),
 		GenerateGraphChart(
 			title+" - CPU Usage",
 			subtitle,
 			nil,
-			[]SeriesData{
+			MoveOverlappingSeriesData([]SeriesData{
 				data[GolangReader][CPU],
 				data[JujuReader][CPU],
 				data[UberReader][CPU],
 				data[IMadmonReader][CPU],
-			},
+			}),
 		),
 		GenerateGraphChart(
 			title+" - RAM MB Usage",
 			subtitle,
 			nil,
-			[]SeriesData{
+			MoveOverlappingSeriesData([]SeriesData{
 				data[GolangReader][RAM],
 				data[JujuReader][RAM],
 				data[UberReader][RAM],
 				data[IMadmonReader][RAM],
-			},
+			}),
 		),
 	}
 }
@@ -84,23 +90,23 @@ func BenchmarkMaxReadOverTimeSyntheticGraph(data BenchmarkData) []*charts.Line {
 			title+" - Total SyntheticRX MB",
 			subtitle,
 			nil,
-			[]SeriesData{
+			MoveOverlappingSeriesData([]SeriesData{
 				data[GolangReader][TotalSyntheticRX],
 				data[JujuReader][TotalSyntheticRX],
 				data[UberReader][TotalSyntheticRX],
 				data[IMadmonReader][TotalSyntheticRX],
-			},
+			}),
 		),
 		GenerateGraphChart(
 			title+" - CPU Usage",
 			subtitle,
 			nil,
-			[]SeriesData{
+			MoveOverlappingSeriesData([]SeriesData{
 				data[GolangReader][CPU],
 				data[JujuReader][CPU],
 				data[UberReader][CPU],
 				data[IMadmonReader][CPU],
-			},
+			}),
 		),
 	}
 }
@@ -117,34 +123,34 @@ func BenchmarkSpikeRecoveryRealWorldLocalGraph(data BenchmarkData) []*charts.Lin
 			title+" - RX MB",
 			subtitle,
 			markLines,
-			[]SeriesData{
+			MoveOverlappingSeriesData([]SeriesData{
 				data[GolangReader][RX],
 				data[JujuReader][RX],
 				data[UberReader][RX],
 				data[IMadmonReader][RX],
-			},
+			}),
 		),
 		GenerateGraphChart(
 			title+" - CPU Usage",
 			subtitle,
 			markLines,
-			[]SeriesData{
+			MoveOverlappingSeriesData([]SeriesData{
 				data[GolangReader][CPU],
 				data[JujuReader][CPU],
 				data[UberReader][CPU],
 				data[IMadmonReader][CPU],
-			},
+			}),
 		),
 		GenerateGraphChart(
 			title+" - RAM MB Usage",
 			subtitle,
 			markLines,
-			[]SeriesData{
+			MoveOverlappingSeriesData([]SeriesData{
 				data[GolangReader][RAM],
 				data[JujuReader][RAM],
 				data[UberReader][RAM],
 				data[IMadmonReader][RAM],
-			},
+			}),
 		),
 	}
 }
@@ -177,7 +183,7 @@ func StartGraphSeriesMonitor(seriesName, color string, seriesValueType MonitorVa
 	}
 }
 
-func GenerateGraphChart(title, subtitle string, markLines map[string]float64, series []SeriesData) *charts.Line {
+func GenerateGraphChart(title, subtitle string, markLines map[string]float64, series []LineSeriesData) *charts.Line {
 	graph := charts.NewLine()
 	graph.SetGlobalOptions(
 		charts.WithTitleOpts(opts.Title{
@@ -194,7 +200,7 @@ func GenerateGraphChart(title, subtitle string, markLines map[string]float64, se
 		}),
 	)
 
-	axisSize := len(lo.MaxBy(series, func(a SeriesData, b SeriesData) bool { return len(a.Values) >= len(b.Values) }).Values)
+	axisSize := len(lo.MaxBy(series, func(a, b LineSeriesData) bool { return len(a.Values) >= len(b.Values) }).Values)
 	var xAxis []string
 	for i := 0.0; i < float64(axisSize/5); i += 0.2 {
 		xAxis = append(xAxis, fmt.Sprintf("%.1f", i))
@@ -203,9 +209,10 @@ func GenerateGraphChart(title, subtitle string, markLines map[string]float64, se
 	graph.SetXAxis(xAxis)
 
 	for _, s := range series {
-		items := lo.Map(s.Values, func(value int, _ int) opts.LineData { return opts.LineData{Value: value} })
+		items := lo.Map(s.Values, func(value float32, _ int) opts.LineData { return opts.LineData{Value: value} })
 		graph.AddSeries(s.Title, items,
 			charts.WithLineStyleOpts(opts.LineStyle{
+				// Width: s.Width,
 				Color: s.Color,
 			}),
 			charts.WithItemStyleOpts(opts.ItemStyle{
@@ -270,4 +277,28 @@ func parseGraphValue(values []monitorResult, valueType MonitorValueType) []int {
 			return 0
 		}
 	})
+}
+
+func MoveOverlappingSeriesData(values []SeriesData) []LineSeriesData {
+	maxValue := 0
+	for _, v := range values {
+		currMaxValue := lo.Max(v.Values)
+		if currMaxValue > maxValue {
+			maxValue = currMaxValue
+		}
+	}
+
+	yAxisSize := float32(maxValue) * 1.1
+	deviation := yAxisSize / 150
+
+	result := make([]LineSeriesData, 0)
+	for i, v := range values {
+		result = append(result, LineSeriesData{
+			Title:  v.Title,
+			Color:  v.Color,
+			Values: lo.Map(v.Values, func(item, _ int) float32 { return float32(item) + (float32(i) * deviation) }),
+		})
+	}
+
+	return result
 }

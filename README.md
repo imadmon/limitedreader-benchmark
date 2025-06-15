@@ -47,11 +47,17 @@ go mod tidy
 go build && ./limitedreader-benchmark
 ```
 
+</br>
+
+
 ## 🚩 Benchmark Results
 
 A full visualizaation of all benchmark results
 
+
 ### Benchmark Graphs
+> 👉 [View Interactive Benchmark Graphs](https://imadmon.github.io/limitedreader-benchmark/benchmark.html)
 
 
 ### Libraries Usages Graphs
+> 👉 [View Interactive Usages Graphs](https://imadmon.github.io/limitedreader-benchmark/usage.html)

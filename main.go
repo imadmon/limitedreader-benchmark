@@ -17,8 +17,8 @@ const (
 
 func main() {
 	// Usage()
-	Benchmark()
-	// LoadBenchmark()
+	// Benchmark()
+	LoadBenchmark()
 	// BenchmarkWithAverage()
 	// LoadBenchmarkWithAverage()
 	// BenchmarkMultipleTimes()
@@ -32,7 +32,7 @@ func Usage() {
 		imadmonRateLimitUsageOnGraph(),
 	}
 
-	WriteGraphsToFile(graphs, usageGraphFile)
+	WriteGraphsToFile("Usage echarts", graphs, usageGraphFile)
 }
 
 func Benchmark() {

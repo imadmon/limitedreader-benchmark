@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/go-echarts/go-echarts/v2/charts"
+	"github.com/go-echarts/go-echarts/v2/components"
 	"github.com/go-echarts/go-echarts/v2/opts"
 	"github.com/samber/lo"
 )
@@ -25,7 +26,7 @@ func GraphBenchmark(benchmark AllBenchmarkData, filename string) {
 	graphs = append(graphs, BenchmarkMaxReadOverTimeSyntheticGraph(benchmark[BenchmarkMaxReadOverTimeSynthetic])...)
 	graphs = append(graphs, BenchmarkSpikeRecoveryRealWorldLocalGraph(benchmark[BenchmarkSpikeRecoveryRealWorldLocal])...)
 
-	WriteGraphsToFile(graphs, filename)
+	WriteGraphsToFile("Benchmark echarts", graphs, filename)
 }
 
 func BenchmarkRateLimitingSyntheticGraph(data BenchmarkData) *charts.Line {
@@ -155,12 +156,17 @@ func BenchmarkSpikeRecoveryRealWorldLocalGraph(data BenchmarkData) []*charts.Lin
 	}
 }
 
-func WriteGraphsToFile(graphs []*charts.Line, graphFileName string) {
+func WriteGraphsToFile(graphPageTitle string, graphs []*charts.Line, graphFileName string) {
+	page := components.NewPage()
+	page.PageTitle = graphPageTitle
+
+	for _, graph := range graphs {
+		page.AddCharts(graph)
+	}
+
 	f, _ := os.Create(graphFileName)
 	defer f.Close()
-	for _, graph := range graphs {
-		graph.Render(f)
-	}
+	page.Render(f)
 	fmt.Printf("Graph rendered at %s\n", graphFileName)
 }
 

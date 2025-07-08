@@ -16,7 +16,7 @@ func main() {
 
 	// reading 8 chunkSize will take a second
 	// should take 32 / 8 = 4 seconds
-	// reads interval divided evenly by limitedreader.ReadIntervalMilliseconds
+	// reads interval are evenly spaced by limitedreader.ReadIntervalMilliseconds
 	limit := 8 * chunkSize
 	limitedReader := limitedreader.NewRateLimitedReader(reader, int64(limit))
 

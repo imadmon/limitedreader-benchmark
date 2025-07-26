@@ -1,6 +1,6 @@
 # 📊 Go Rate Limiter Benchmark Suite
 
-Welcome to the official benchmark suite used to evaluate and compare different Go rate limiting reader libraries — including 
+Welcome to the official benchmark suite used to evaluate and compare different Go rate limiting reader libraries - including 
 [`golang.org/x/time/rate`](https://pkg.go.dev/golang.org/x/time/rate), 
 [`uber-go/ratelimit`](https://github.com/uber-go/ratelimit), 
 [`juju/ratelimit`](https://github.com/juju/ratelimit) and 
@@ -24,11 +24,11 @@ This project runs various real-world and synthetic tests and outputs data for vi
 
 ## 🧪 Benchmark Scenarios
 
-Each benchmark outputs to a graph with metrics like RX bytes, CPU percentage, RAM usage — sampled every 200ms.
+Each benchmark outputs to a graph with metrics like RX bytes, CPU percentage, RAM usage - sampled every 200ms.
 
 | Test Name            | Description                                                                 |
 |----------------------|-----------------------------------------------------------------------------|
-| **BasicRateLimit**   | Classic case — stream with 1/4 throttle rate, measuring RX over time         |
+| **BasicRateLimit**   | Classic case - stream with 1/4 throttle rate, measuring RX over time         |
 | **RealStreamLimit**  | Actual TCP stream between two servers under rate limit                       |
 | **MaxReadSpeed**     | Limit set to "unlimited", tests raw read throughput capacity                 |
 | **SpikeRecovery**    | Test spike handling: data burst midstream, then return to steady rate        |

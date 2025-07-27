@@ -18,7 +18,7 @@ func main() {
 	// should take 32 / 8 = 4 seconds
 	// reads interval are evenly spaced by limitedreader.ReadIntervalMilliseconds
 	limit := 8 * chunkSize
-	limitedReader := limitedreader.NewRateLimitedReader(reader, int64(limit))
+	limitedReader := limitedreader.NewLimitedReader(reader, int64(limit))
 
 	var total int
 	buffer := make([]byte, chunkSize)

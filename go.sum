@@ -10,8 +10,8 @@ github.com/go-ole/go-ole v1.2.6/go.mod h1:pprOEPIfldk/42T2oK7lQ4v4JSDwmV0As9GaiU
 github.com/google/go-cmp v0.5.6/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
 github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
-github.com/imadmon/limitedreader v1.0.0 h1:4eqpT3LF7OY0tfVdAc2NYgGyahwsKORyBSqd7P2wTeo=
-github.com/imadmon/limitedreader v1.0.0/go.mod h1:SJaRSBqu/M5n0IXdIOdKOOkDoK+g3uZtKG0a7nuuWmE=
+github.com/imadmon/limitedreader v1.1.0 h1:nHfKX9ewX0nwd58OnC/3dihB0SYKOhahnwzfjGoF5M8=
+github.com/imadmon/limitedreader v1.1.0/go.mod h1:CL99Z1Eh4mwcABJQqIlIM0IY8+FZJ5idVLv32nAOijU=
 github.com/juju/ratelimit v1.0.2 h1:sRxmtRiajbvrcLQT7S+JbqU0ntsb9W2yhSdNN8tWfaI=
 github.com/juju/ratelimit v1.0.2/go.mod h1:qapgC/Gy+xNh9UxzV13HGGl/6UXNN+ct+vwSgWNm/qk=
 github.com/kr/pretty v0.1.0 h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=

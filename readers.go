@@ -22,7 +22,7 @@ var (
 )
 
 func IMadmonDeterministicRateLimitReaderFactory(reader io.ReadCloser, bufferSize, limit int) io.ReadCloser {
-	return limitedreader.NewRateLimitedReadCloser(reader, int64(limit))
+	return limitedreader.NewLimitedReadCloser(reader, int64(limit))
 }
 
 func GolangBurstsRateLimitReaderFactory(reader io.ReadCloser, bufferSize, limit int) io.ReadCloser {

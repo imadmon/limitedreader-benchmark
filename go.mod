@@ -4,7 +4,7 @@ go 1.24.4
 
 require (
 	github.com/go-echarts/go-echarts/v2 v2.6.1
-	github.com/imadmon/limitedreader v1.0.0
+	github.com/imadmon/limitedreader v1.1.0
 	github.com/juju/ratelimit v1.0.2
 	github.com/samber/lo v1.51.0
 	github.com/shirou/gopsutil/v3 v3.24.5

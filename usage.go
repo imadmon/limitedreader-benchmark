@@ -207,7 +207,7 @@ func imadmonRateLimitUsageOnGraph() *charts.Line {
 	const limit = 5 * chunkSize
 
 	reader := bytes.NewBuffer(make([]byte, dataSize))
-	limitedReader := limitedreader.NewRateLimitedReader(reader, int64(limit))
+	limitedReader := limitedreader.NewLimitedReader(reader, int64(limit))
 
 	var total atomic.Int64
 	buffer := make([]byte, chunkSize)
